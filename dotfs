@@ -1,0 +1,34 @@
+#!/bin/bash
+# ------------------------------------------------------------------
+# [Author] Guangyuan (Charlie) Yang
+#          <yzgyyang@outlook.com>
+#          @yzgyyang
+# ------------------------------------------------------------------
+
+VERSION=0.0.1
+PROGNAME=$(basename $0)
+
+func_help(){
+	echo "Usage: $PROGNAME <subcommand> [options]"
+	echo "Subcommands: fetch"
+}
+
+func_fetch(){
+	echo "func_fetch"
+}
+
+subcommand=$1
+case $subcommand in
+	"" | "-h" | "--help")
+		func_help
+		;;
+	*)
+		shift
+		func_${subcommand} $@
+		if [ $? -eq 127 ]; then
+			echo "Error: '$subcommand' is not a known function." >&2
+			echo "	Run '$PROGNAME --help' for a known subcommand." >&2
+			exit 1
+		fi
+		;;
+esac
